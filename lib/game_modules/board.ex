@@ -5,7 +5,7 @@ defmodule Board do
   def create_board(row_size) do
     1..row_size * row_size
     |> Enum.to_list
-    |> Map.new(fn position_on_board -> {position_on_board |> Integer.to_string |> String.to_atom(), position_on_board } end)
+    |> Map.new(fn position_on_board -> {position_to_key_atom(position_on_board), position_on_board } end)
   end
 
   def valid_move?(board, position) do
@@ -21,10 +21,6 @@ defmodule Board do
     right_diagonal_win = right_diagonal_winning_combination(row_size)
     row_wins ++ column_wins ++ left_diagonal_win ++ right_diagonal_win
   end
-
-  # def won? do
-  #   false
-  # end
 
   def position_to_key_atom(position) do
     position

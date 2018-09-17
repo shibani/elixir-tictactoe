@@ -74,14 +74,4 @@ defmodule BoardTest do
     assert Board.key_atom_to_position(position_atom) == 5
   end
 
-  # test "board returns true if a game is won" do
-  #   row_size = 3
-  #   win_combinations = Board.winning_combinations(row_size)
-  #   board = Board.create_board(row_size)
-  #   # Map.update(board, 1, "X")
-  #   # Map.update(board, 2, "X")
-  #   # Map.update(board, 3, "X")
-  #   IO.puts board
-  # end
-
 end

@@ -167,5 +167,6 @@ defmodule MatrixBoardTest do
     ]
     assert MatrixBoard.is_tied?(board) == false
   end
+
 end
 

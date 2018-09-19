@@ -22,12 +22,6 @@ defmodule MatrixBoard do
     ]
   end
 
-  def mark_square(board, row, column, icon) do
-    old_row = get_row_at(board, row)
-    new_row = List.replace_at(old_row, column, icon)
-    List.replace_at(board, row, new_row)
-  end
-
   def get_row_at(board, row) do
     Enum.at(rows(board), row)
   end
@@ -52,20 +46,10 @@ defmodule MatrixBoard do
     Enum.count(Enum.uniq(row)) == 1
   end
 
-  def has_win?(board) do
-    has_winning_row?(board) ||
-    has_winning_column?(board) ||
-    has_winning_diagonal?(board)
-  end
-
   def is_full?(board) do
     board
     |> List.flatten
     |> Enum.all?(fn x -> x in [:x, :o] end)
-  end
-
-  def is_tied?(board) do
-    is_full?(board) && !has_win?(board)
   end
 
   defp check_for_win(rows) do

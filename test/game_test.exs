@@ -4,7 +4,7 @@ defmodule GameTest do
   doctest Game
 
   test "game can mark a square on the board" do
-    board = MatrixBoard.create_board(3)
+    board = Board.create_board(3)
     updated = Game.mark_square(board, 0, 0, :x)
     assert updated == [[:x, nil, nil], [nil, nil, nil], [nil, nil, nil]]
   end

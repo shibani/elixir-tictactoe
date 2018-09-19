@@ -1,56 +1,64 @@
 defmodule Board do
-
-  @player_icons ["X", "O"]
-
   def create_board(row_size) do
-    1..row_size * row_size
-    |> Enum.to_list
-    |> Map.new(fn position_on_board -> {position_to_key_atom(position_on_board), position_on_board } end)
+    nil
+    |> List.duplicate(row_size)
+    |> List.duplicate(row_size)
   end
 
-  def valid_move?(board, position) do
-    position_key = position_to_key_atom(position)
-    {_, value_at_position} = Map.fetch(board, position_key)
-    value_at_position not in @player_icons
+  def columns(board) do
+    board
+    |> Enum.zip()
+    |> Enum.map(&Tuple.to_list/1)
   end
 
-  def winning_combinations(row_size) do
-    row_wins = row_winning_combinations(row_size)
-    column_wins = column_winning_combinations(row_size)
-    left_diagonal_win = left_diagonal_winning_combination(row_size)
-    right_diagonal_win = right_diagonal_winning_combination(row_size)
-    row_wins ++ column_wins ++ left_diagonal_win ++ right_diagonal_win
+  def rows(board) do
+    board
   end
 
-  def position_to_key_atom(position) do
-    position
-    |> Integer.to_string()
-    |> String.to_atom()
+  def diagonals(board) do
+    [
+      get_diagonal(board),
+      get_diagonal(Enum.reverse(board))
+    ]
   end
 
-  def key_atom_to_position(key_atom) do
-    key_atom
-    |> Atom.to_string()
-    |> String.to_integer()
+  def get_row_at(board, row) do
+    Enum.at(rows(board), row)
   end
 
-  defp row_winning_combinations(row_size) do
-    1..row_size * row_size
-    |> Enum.chunk(row_size)
+  def get_col_at(board, col) do
+    Enum.at(columns(board), col)
   end
 
-  defp column_winning_combinations(row_size) do
-    1..row_size
-    |> Enum.map(fn column_header -> [column_header, column_header + row_size, column_header + 2 * row_size] end)
+  def has_winning_row?(board) do
+    check_for_win(rows(board))
   end
 
-  defp left_diagonal_winning_combination(row_size) do
-    left_endpoint = 1
-    [[left_endpoint, (left_endpoint + row_size + 1), (left_endpoint + 2 * row_size + 2)]]
+  def has_winning_column?(board) do
+    check_for_win(columns(board))
   end
 
-  defp right_diagonal_winning_combination(row_size) do
-    right_endpoint = row_size
-    [[right_endpoint, (right_endpoint + row_size - 1), (right_endpoint + 2 * row_size - 2)]]
+  def has_winning_diagonal?(board) do
+    check_for_win(diagonals(board))
+  end
+
+  def is_winning_row?(row) do
+    Enum.count(Enum.uniq(row)) == 1
+  end
+
+  def is_full?(board) do
+    board
+    |> List.flatten
+    |> Enum.all?(fn x -> x != nil end)
+  end
+
+  defp check_for_win(rows) do
+    Enum.any?(rows, fn row -> is_winning_row?(row) end)
+  end
+
+  defp get_diagonal(board) do
+    board
+    |> Enum.with_index
+    |> Enum.map(fn {row, idx} -> Enum.at(row, idx) end)
   end
 end

@@ -1,7 +1,6 @@
 defmodule BoardTest do
 
   use ExUnit.Case
-  doctest Board
 
   test "should create a board with squares equal to the square of the row-size entered" do
     row_size = 3

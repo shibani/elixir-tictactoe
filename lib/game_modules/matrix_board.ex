@@ -49,7 +49,7 @@ defmodule MatrixBoard do
   def is_full?(board) do
     board
     |> List.flatten
-    |> Enum.all?(fn x -> x in [:x, :o] end)
+    |> Enum.all?(fn x -> x != nil end)
   end
 
   defp check_for_win(rows) do

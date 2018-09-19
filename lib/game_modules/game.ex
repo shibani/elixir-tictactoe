@@ -20,4 +20,15 @@ defmodule Game do
     MatrixBoard.is_full?(board) || Game.has_win?(board)
   end
 
+  def switch_player(player_list, current_player \\ nil) do
+    cond do
+      current_player == nil ->
+        List.first(player_list)
+      Map.equal?(current_player, List.last(player_list)) ->
+        List.first(player_list)
+      Map.equal?(current_player, List.first(player_list)) ->
+        List.last(player_list)
+    end
+  end
+
 end

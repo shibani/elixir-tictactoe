@@ -1,5 +1,4 @@
 defmodule BoardTest do
-
   use ExUnit.Case
 
   test "should create a board with squares equal to the square of the row-size entered" do

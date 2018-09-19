@@ -104,8 +104,8 @@ defmodule MatrixBoardTest do
   describe "board can be full" do
     test "board is not full" do
       board = [
-        [:x, :x, 3],
-        [:o, 5, :x],
+        [:x, :x, nil],
+        [:o, nil, :x],
         [:x, :o, :x]
       ]
       assert MatrixBoard.is_full?(board) == false
@@ -120,6 +120,5 @@ defmodule MatrixBoardTest do
       assert MatrixBoard.is_full?(board) == true
     end
   end
-
 end
 

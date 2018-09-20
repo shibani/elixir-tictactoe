@@ -30,30 +30,15 @@ defmodule Board do
     Enum.at(columns(board), col)
   end
 
-  def has_winning_row?(board) do
-    check_for_win(rows(board))
-  end
-
-  def has_winning_column?(board) do
-    check_for_win(columns(board))
-  end
-
-  def has_winning_diagonal?(board) do
-    check_for_win(diagonals(board))
-  end
-
-  def is_winning_row?(row) do
-    Enum.count(Enum.uniq(row)) == 1
+  def get_square(board, row, col) do
+    row = Board.get_row_at(board, row)
+    Enum.at(row, col)
   end
 
   def is_full?(board) do
     board
     |> List.flatten
     |> Enum.all?(fn x -> x != nil end)
-  end
-
-  defp check_for_win(rows) do
-    Enum.any?(rows, fn row -> is_winning_row?(row) end)
   end
 
   defp get_diagonal(board) do

@@ -1,8 +1,6 @@
-defmodule Player do
-
-  def create_player(icon, type) do
-    %{icon: icon, type: type}
-  end
+defmodule PlayerManager do
+  @enforce_keys [:name, :icon]
+  defstruct [:name, :icon]
 
   def player_list(player1, player2) do
     [

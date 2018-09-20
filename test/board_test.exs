@@ -1,6 +1,12 @@
 defmodule BoardTest do
   use ExUnit.Case
 
+  @board [
+    [:x, :x, :o],
+    [:x, :o, :o],
+    [:o, :o, :x]
+  ]
+
   describe "creating a board" do
     test "3x3 board has 9 spaces" do
       assert [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]] == Board.create_board(3)
@@ -18,90 +24,27 @@ defmodule BoardTest do
 
   describe "rows, columns, diagonals" do
     test "gets columns" do
-      board = [
-        [:x, :x, :o],
-        [:x, :o, :o],
-        [:o, :o, :x]
-      ]
-
-      assert Board.columns(board) == [[:x, :x, :o], [:x, :o, :o], [:o, :o, :x]]
+      assert Board.columns(@board) == [[:x, :x, :o], [:x, :o, :o], [:o, :o, :x]]
     end
 
     test "gets rows" do
-      board = [
-        [:x, :x, :o],
-        [:x, :o, :o],
-        [:o, :o, :x]
-      ]
-
-      assert Board.rows(board) == board
+      assert Board.rows(@board) == @board
     end
 
     test "get diagonals" do
-      board = [
-        [:x, :x, :o],
-        [:x, :o, :o],
-        [:o, :o, :x]
-      ]
-
-      assert Board.diagonals(board) == [[:x, :o, :x], [:o, :o, :o]]
+      assert Board.diagonals(@board) == [[:x, :o, :x], [:o, :o, :o]]
     end
 
     test "get a row by its row index" do
-      board = [
-        [:x, :x, :o],
-        [:x, :o, :o],
-        [:o, :o, :x]
-      ]
-      assert Board.get_row_at(board, 0) == [:x, :x, :o]
+      assert Board.get_row_at(@board, 0) == [:x, :x, :o]
     end
 
     test "get a column by its column index" do
-      board = [
-        [:x, :x, :o],
-        [:x, :o, :o],
-        [:o, :o, :x]
-      ]
-      assert Board.get_col_at(board, 1) == [:x, :o, :o]
+      assert Board.get_col_at(@board, 1) == [:x, :o, :o]
     end
   end
 
-  describe "board can have winning combinations" do
-    test "has winning row" do
-      board = [
-        [:x, :x, :x],
-        [:x, :o, :o],
-        [:o, :o, :x]
-      ]
-      assert Board.has_winning_row?(board) == true
-    end
-
-    test "has winning column" do
-      board = [
-        [:x, :x, :o],
-        [:x, :o, :o],
-        [:x, :o, :x]
-      ]
-      assert Board.has_winning_column?(board) == true
-    end
-
-    test "has winning diagonal" do
-      board = [
-        [:x, :x, :o],
-        [:o, :x, :o],
-        [:o, :o, :x]
-      ]
-      assert Board.has_winning_diagonal?(board) == true
-    end
-
-    test "is winning row" do
-      assert Board.is_winning_row?([:x, :x, :x]) == true
-      assert Board.is_winning_row?([:o, :x, :x]) == false
-      assert Board.is_winning_row?([:o, :x, nil]) == false
-    end
-  end
-
-  describe "board can be full" do
+  describe "board can be full or not" do
     test "board is not full" do
       board = [
         [:x, :x, nil],
@@ -112,13 +55,21 @@ defmodule BoardTest do
     end
 
     test "board is full" do
+      assert Board.is_full?(@board) == true
+    end
+  end
+
+  describe "board can check if a move is valid" do
+    test "can get a square" do
       board = [
-        [:x, :x, :o],
-        [:o, :x, :x],
+        [:x, :x, nil],
+        [:o, nil, :x],
         [:x, :o, :x]
       ]
-      assert Board.is_full?(board) == true
+
+      assert Board.get_square(board, 0, 1) == :x
     end
+
   end
 
 end

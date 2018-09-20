@@ -7,9 +7,9 @@ defmodule Game do
   end
 
   def has_win?(board) do
-    Board.has_winning_row?(board) ||
-    Board.has_winning_column?(board) ||
-    Board.has_winning_diagonal?(board)
+    Rules.has_winning_row?(board) ||
+    Rules.has_winning_column?(board) ||
+    Rules.has_winning_diagonal?(board)
   end
 
   def is_tied?(board) do
@@ -29,6 +29,22 @@ defmodule Game do
       Map.equal?(current_player, List.first(player_list)) ->
         List.last(player_list)
     end
+  end
+
+  def square_to_rows_and_cols(square, row_size) do
+    [
+      div(square - 1, row_size),
+      rem(square - 1, row_size)
+    ]
+  end
+
+  def rows_and_cols_to_square(row, col, row_size) do
+    row * row_size + col + 1
+  end
+
+  def valid_move?(board, square, row_size) do
+    row_col_coords = Game.square_to_rows_and_cols(square, row_size)
+    Board.get_square(board, List.first(row_col_coords), List.last(row_col_coords)) == nil
   end
 
 end

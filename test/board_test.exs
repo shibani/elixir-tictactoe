@@ -1,76 +1,75 @@
 defmodule BoardTest do
-
   use ExUnit.Case
 
-  test "should create a board with squares equal to the square of the row-size entered" do
-    row_size = 3
-    board = Board.create_board(row_size)
-    assert map_size(board) == 9
+  @board [
+    [:x, :x, :o],
+    [:x, :o, :o],
+    [:o, :o, :x]
+  ]
+
+  describe "creating a board" do
+    test "3x3 board has 9 spaces" do
+      assert [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]] == Board.create_board(3)
+    end
+
+    test "4x4 board has 16 spaces" do
+      assert [
+               [nil, nil, nil, nil],
+               [nil, nil, nil, nil],
+               [nil, nil, nil, nil],
+               [nil, nil, nil, nil]
+             ] == Board.create_board(4)
+    end
   end
 
-  test "board map should have integer atoms as keys" do
-    row_size = 3
-    position = Enum.random(1..row_size * row_size)
-    position_key = position |> Integer.to_string() |> String.to_atom()
-    board = Board.create_board(row_size)
-    {status, _} = Map.fetch(board, position_key)
-    assert status == :ok
+  describe "rows, columns, diagonals" do
+    test "gets columns" do
+      assert Board.columns(@board) == [[:x, :x, :o], [:x, :o, :o], [:o, :o, :x]]
+    end
+
+    test "gets rows" do
+      assert Board.rows(@board) == @board
+    end
+
+    test "get diagonals" do
+      assert Board.diagonals(@board) == [[:x, :o, :x], [:o, :o, :o]]
+    end
+
+    test "get a row by its row index" do
+      assert Board.get_row_at(@board, 0) == [:x, :x, :o]
+    end
+
+    test "get a column by its column index" do
+      assert Board.get_col_at(@board, 1) == [:x, :o, :o]
+    end
   end
 
-  test "board squares should be filled with integer value of position at start of game" do
-    row_size = 3
-    position = Enum.random(1..row_size * row_size)
-    position_key = position |> Integer.to_string() |> String.to_atom()
-    board = Board.create_board(row_size)
-    {_, result} = Map.fetch(board, position_key)
-    assert result == position
+  describe "board can be full or not" do
+    test "board is not full" do
+      board = [
+        [:x, :x, nil],
+        [:o, nil, :x],
+        [:x, :o, :x]
+      ]
+      assert Board.is_full?(board) == false
+    end
+
+    test "board is full" do
+      assert Board.is_full?(@board) == true
+    end
   end
 
-  test "board should return true if a move is valid" do
-    row_size = 3
-    board = Board.create_board(row_size)
-    position = 5
-    result = Board.valid_move?(board, position)
-    assert result == true
-  end
+  describe "board can check if a move is valid" do
+    test "can get a square" do
+      board = [
+        [:x, :x, nil],
+        [:o, nil, :x],
+        [:x, :o, :x]
+      ]
 
-  test "board should have winning combinations" do
-    row_size = 3
-    win_combinations = Board.winning_combinations(row_size)
-    assert length(win_combinations) == 8
-  end
+      assert Board.get_square(board, 0, 1) == :x
+    end
 
-  test "board should have a winning combination for each row of squares" do
-    row_size = 3
-    win_combinations = Board.winning_combinations(row_size)
-    assert Enum.member?(win_combinations, [1,2,3])
-    assert Enum.member?(win_combinations, [4,5,6])
-    assert Enum.member?(win_combinations, [7,8,9])
-  end
-
-  test "board should have a winning combination for each column of squares" do
-    row_size = 3
-    win_combinations = Board.winning_combinations(row_size)
-    assert Enum.member?(win_combinations, [1,4,7])
-    assert Enum.member?(win_combinations, [2,5,8])
-    assert Enum.member?(win_combinations, [3,6,9])
-  end
-
-  test "board should have a winning combination for each diagonal" do
-    row_size = 3
-    win_combinations = Board.winning_combinations(row_size)
-    assert Enum.member?(win_combinations, [1,5,9])
-    assert Enum.member?(win_combinations, [3,5,7])
-  end
-
-  test "board can convert a position to a key to access map values" do
-    position = 5
-    assert Board.position_to_key_atom(position) == :"5"
-  end
-
-  test "board can convert a position atom from map back to a position" do
-    position_atom = :"5"
-    assert Board.key_atom_to_position(position_atom) == 5
   end
 
 end

@@ -1,3 +1,7 @@
 defprotocol PlayerMove do
-  def select_move(board, current_player, input \\ nil)
+
+  def select_move(player, board)
+
 end
+
+

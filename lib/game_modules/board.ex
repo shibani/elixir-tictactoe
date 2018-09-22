@@ -35,6 +35,14 @@ defmodule Board do
     Enum.at(row, col)
   end
 
+  def empty_squares(board) do
+    board
+    |> List.flatten
+    |> Enum.with_index(1)
+    |> Enum.reject(fn {key, _idx} -> key != nil end)
+    |> Enum.map(fn {_key, idx} -> idx end)
+  end
+
   def is_full?(board) do
     board
     |> List.flatten

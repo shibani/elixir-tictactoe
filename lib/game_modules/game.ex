@@ -43,8 +43,8 @@ defmodule Game do
   end
 
   def valid_move?(board, square, row_size) do
-    row_col_coords = Game.square_to_rows_and_cols(square, row_size)
-    Board.get_square(board, List.first(row_col_coords), List.last(row_col_coords)) == nil
+    [first, last] = Game.square_to_rows_and_cols(square, row_size)
+    Board.get_square(board, first, last) == nil
   end
 
 end

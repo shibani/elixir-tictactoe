@@ -14,6 +14,7 @@ defmodule Rules do
 
   def is_winning_row?(row) do
     Enum.count(Enum.uniq(row)) == 1
+    && !Enum.any?(row, &is_nil/1)
   end
 
   defp check_for_win(rows) do

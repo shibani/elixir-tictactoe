@@ -1,19 +1,12 @@
-defmodule FakeStrategy do
-
-  def best_move(board) do
-    6
-  end
-
-end
-
 defmodule ComputerPlayerTest do
   use ExUnit.Case
 
-    @board [
-      [:x, :x, :o],
-      [:x, nil, :o],
-      [:o, :o, :x]
-    ]
+  @board [
+    [:x, :x, :o],
+    [:x, nil, :o],
+    [:o, :o, :x]
+  ]
+
   test "should create a player with an icon and a name" do
     player = ComputerPlayer.create_player("Player 1", :x)
     assert player.icon == :x

@@ -20,22 +20,22 @@ defmodule Game do
     Board.is_full?(board) || Game.has_win?(board)
   end
 
-  def switch_player(player_list, current_player \\ nil) do
-    cond do
-      current_player == nil ->
-        List.first(player_list)
-      Map.equal?(current_player, List.last(player_list)) ->
-        List.first(player_list)
-      Map.equal?(current_player, List.first(player_list)) ->
-        List.last(player_list)
-    end
+  def switch_player(gamestate) do
+    new_gamestate = gamestate
+    |> GameState.switch_current_player_in_gamestate
+    new_gamestate.current_player
   end
 
   def square_to_rows_and_cols(square, row_size) do
-    [
-      div(square - 1, row_size),
-      rem(square - 1, row_size)
-    ]
+    %{
+      row: div(square - 1, row_size),
+      col: rem(square - 1, row_size)
+    }
+  end
+
+  def rows_and_cols_to_square(square, row_size) do
+    %{row: row, col: col} = square
+    row * row_size + col + 1
   end
 
   def rows_and_cols_to_square(row, col, row_size) do
@@ -43,8 +43,8 @@ defmodule Game do
   end
 
   def valid_move?(board, square, row_size) do
-    [first, last] = Game.square_to_rows_and_cols(square, row_size)
-    Board.get_square(board, first, last) == nil
+    %{row: row, col: col} = Game.square_to_rows_and_cols(square, row_size)
+    Board.get_square(board, row, col) == nil
   end
 
 end

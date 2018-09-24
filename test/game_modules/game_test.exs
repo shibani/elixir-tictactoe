@@ -69,23 +69,19 @@ defmodule GameTest do
       assert Game.is_over?(board) == false
     end
 
-    test "game is able to set the current player if this is a new game and there is no current player yet" do
-      player = nil
+    test "game is able to switch the current player" do
+      board = "foo"
+      row_size = 3
+      rules = "rules"
       player1 = HumanPlayer.create_player("Player 1", :x)
       player2 = ComputerPlayer.create_player("Computer", :o)
-      player_list = PlayerManager.player_list(player1, player2)
-      current_player = Game.switch_player(player_list, player)
 
-      assert Map.equal?(current_player, player1)
-    end
+      current_player = GameState.create_game_state(board, row_size, rules)
+      |> GameState.set_first_player(player1)
+      |> GameState.set_second_player(player2)
+      |> Game.switch_player
 
-    test "game is able to switch the current player" do
-      player1 = HumanPlayer.create_player("Player 1", :o)
-      player2 = ComputerPlayer.create_player("Computer", :o)
-      player_list = PlayerManager.player_list(player1, player2)
-      current_player = Game.switch_player(player_list, player1)
-
-      assert Map.equal?(current_player, player2)
+      assert current_player == player2
     end
   end
 
@@ -93,10 +89,16 @@ defmodule GameTest do
     test "it can convert a position to rows and columns" do
       square = 6
       row_size = 3
-      assert Game.square_to_rows_and_cols(square, row_size) == [1, 2]
+      assert Game.square_to_rows_and_cols(square, row_size) == %{ row: 1, col: 2}
     end
 
-    test "it can convert rows and columns back to a position" do
+    test "it can convert a map of row and column coordinates back to a position" do
+      square = %{row: 1, col: 2}
+      row_size = 3
+      assert Game.rows_and_cols_to_square(square, row_size) == 6
+    end
+
+    test "it can convert row and column coordinates back to a position" do
       row = 1
       col = 2
       row_size = 3

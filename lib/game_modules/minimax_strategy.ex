@@ -3,9 +3,7 @@ defmodule MinimaxStrategy do
     5
   end
 
-  # game, depth
-  # game_is_over?(game)
-  # available_positions - we have empty squares
+
 
 end
 

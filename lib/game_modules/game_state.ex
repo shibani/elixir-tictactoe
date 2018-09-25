@@ -33,4 +33,9 @@ defmodule GameState do
     end
   end
 
+  def update_board(gamestate, new_board) do
+    gamestate
+    |> Map.put(:board, new_board)
+  end
+
 end

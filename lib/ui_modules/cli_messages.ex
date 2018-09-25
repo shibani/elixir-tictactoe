@@ -8,6 +8,10 @@ defmodule CliMessages do
   @invalid_user_icon "\nThat was an invalid selection. Icon should be one alpha character. Please try again.\n"
   @invalid_turn_order "\nThat was an invalid selection. Please enter 1 if you would like to go first or 2 if second.\n"
   @row_divider "|\n-------------\n"
+  @computer_name "Computer"
+  @computer_icon "@"
+  @game_tied "\nGame is tied!\n"
+  @game_end "\nThank you for playing!\n"
 
   def welcome_message, do: IO.puts @welcome_message
 
@@ -22,6 +26,14 @@ defmodule CliMessages do
   def invalid_user_icon, do: @invalid_user_icon
 
   def invalid_turn_order, do: @invalid_turn_order
+
+  def computer_name, do: @computer_name
+
+  def computer_icon, do: @computer_icon
+
+  def game_tied, do: @game_tied
+
+  def game_end, do: @game_end
 
   def format_board_for_cli(board, row_size) do
     board

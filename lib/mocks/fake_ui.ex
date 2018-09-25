@@ -1,5 +1,9 @@
 defmodule FakeGameConfig do
-  def init do
+  def setup do
+    "Game setup was called"
+  end
+
+  def init(gamesetup) do
     "Game config was called"
   end
 end
@@ -17,7 +21,11 @@ defmodule FakeGameOver do
 end
 
 defmodule FakeNilGameConfig do
-  def init do
+
+  def setup do
+    nil
+  end
+  def init(gameconfig) do
     nil
   end
 end

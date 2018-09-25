@@ -1,4 +1,5 @@
 defmodule UserNameConfig do
+
   def validate(input, message, io \\ IO) do
     if String.length(input) > 0 do
       name_is_valid(input)

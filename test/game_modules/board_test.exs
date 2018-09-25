@@ -69,7 +69,18 @@ defmodule BoardTest do
 
       assert Board.get_square(board, 0, 1) == :x
     end
+  end
 
+  describe "board can get empty squares" do
+    test "it can get a list of empty squares" do
+      board = [
+        [:x, :x, nil],
+        [:o, nil, :x],
+        [:x, :o, :x]
+      ]
+
+      assert Board.empty_squares(board) == [3,5]
+    end
   end
 
 end

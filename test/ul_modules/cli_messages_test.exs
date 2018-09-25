@@ -61,4 +61,16 @@ defmodule CliMessagesTest do
     assert CliMessages.invalid_turn_order == message
   end
 
+  test "it can return a name for the computer" do
+    message = "Computer"
+
+    assert CliMessages.computer_name == message
+  end
+
+  test "it can return an icon for the computer" do
+    message = "@"
+
+    assert CliMessages.computer_icon == message
+  end
+
 end

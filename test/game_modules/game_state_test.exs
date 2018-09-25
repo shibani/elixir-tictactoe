@@ -21,7 +21,7 @@ defmodule GameStateTest do
     end
   end
 
-  describe "update game state" do
+  describe "update game state with players" do
     test "should update the gamestate when given the first player" do
       board = "foo"
       row_size = 3
@@ -95,6 +95,40 @@ defmodule GameStateTest do
       |> GameState.switch_current_player_in_gamestate
 
       assert gamestate.current_player == player2
+    end
+  end
+
+  describe "update game state with updated board" do
+    @row_size 3
+
+    @board1 [
+      [:x, :x, :o],
+      [:o, :x, :x],
+      [:o, :o, :o]
+    ]
+
+    @board2 [
+      [:x, :x, :o],
+      [:o, :x, :x],
+      [:x, :o, :o]
+    ]
+
+    @gamestate1 %{
+      board: @board1,
+      row_size: @row_size,
+      player1: nil,
+      player2: nil,
+      current_player: nil,
+      rules: Rules
+    }
+
+    test "given a gamestate and a new board, it can update the board" do
+      new_gamestate = GameState.update_board(@gamestate1, @board2)
+
+      stringify_asserted_result = new_gamestate.board |> List.flatten |> Enum.join(", ")
+      stringify_expected_result = @board2 |> List.flatten |> Enum.join(", ")
+
+      assert stringify_asserted_result == stringify_expected_result
     end
   end
 end

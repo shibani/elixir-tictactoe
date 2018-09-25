@@ -47,4 +47,27 @@ defmodule Game do
     Board.get_square(board, row, col) == nil
   end
 
+  def winning_icon(board) do
+    if Game.has_win?(board) do
+      cond do
+        Rules.has_winning_row?(board) ->
+          Board.rows(board)
+          |> get_icon
+        Rules.has_winning_column?(board) ->
+          Board.columns(board)
+          |> get_icon
+        Rules.has_winning_diagonal?(board) ->
+          Board.diagonals(board)
+          |> get_icon
+      end
+    end
+  end
+
+  defp get_icon(rows) do
+    rows
+    |> Enum.filter(&Rules.is_winning_row?/1)
+    |> List.flatten
+    |> List.first
+  end
+
 end

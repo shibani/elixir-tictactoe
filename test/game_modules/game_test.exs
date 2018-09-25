@@ -110,6 +110,10 @@ defmodule GameTest do
       assert Game.valid_move?(@board3, 5, row_size) == true
       assert Game.valid_move?(@board3, 6, row_size) == false
     end
+
+    test "it can get the winning icon" do
+      assert Game.winning_icon(@board2) == :o
+    end
   end
 
 end

@@ -20,24 +20,32 @@ defmodule GameConfigTest do
   }
 
   describe "init can set the game configuration and the initial gamestate" do
-    @tag :skip
     test "init returns a gamestate with board, row_size, players and rules values" do
-      row_size = GameConfig.row_size
-      gamestate = GameConfig.init_gamestate(row_size)
+      gamesetup = %{
+        row_size: 3,
+        name: "foo",
+        icon: :x,
+        turn_order: 1,
+        computer_name: "bar",
+        computer_icon: :o,
+        computer_strategy: FakeStrategy
+      }
 
-      assert %{
+      gamestate = GameConfig.init(gamesetup)
+
+      assert %GameState{
         board: @board,
-        row_size: row_size,
-        player1: nil,
-        player2: nil,
-        current_player: nil,
+        row_size: 3,
+        player1: %HumanPlayer{icon: :x, name: "foo"},
+        player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+        current_player: %HumanPlayer{icon: :x, name: "foo"},
         rules: Rules
-      } == GameConfig.init
+      } == gamestate
     end
 
-
     test "game_config can set the row size" do
-      assert GameConfig.row_size(5) == 5
+      result = GameConfig.row_size(5)
+      assert result == 5
     end
 
     test "game_config sets a row size of 3 as the default" do
@@ -54,13 +62,39 @@ defmodule GameConfigTest do
     end
   end
 
-  describe "it can create players according to the turn order entered" do
-    name = "Player 1"
-    icon = "x"
-    turn_order = 2
+  describe "init can create the players" do
+    test "it can create the human player according to the turn order entered" do
+      name = "Player 1"
+      icon = "x"
+      turn_order = 2
 
-    result = GameConfig.create_user_generated_player(@gamestate, name, icon, turn_order)
-    assert result == "create computer player first, then human player"
+      human_player = HumanPlayer.create_player(name, icon)
+
+      result = GameConfig.create_human_player(@gamestate, name, icon, turn_order)
+      %{ player2: player2 } = result
+      assert Map.equal?(player2, human_player)
+    end
+
+    test "it can announce the creation of the computer player" do
+      message = "\ncomputer chooses to use the icon: O and will go first.\n"
+      execute_main = fn ->
+        GameConfig.computer_player_config_message("computer", "O", 2)
+      end
+      assert capture_io(execute_main) =~ message
+    end
+
+    test "it can create the computer player according to the turn order entered" do
+      name = "Computer"
+      icon = "@"
+      turn_order = 2
+      strategy = "foo"
+
+      computer_player = ComputerPlayer.create_player(name, icon, strategy)
+
+      result = GameConfig.create_computer_player(@gamestate, name, icon, turn_order, strategy)
+      %{ player1: player1 } = result
+      assert Map.equal?(player1, computer_player)
+    end
   end
 
 end

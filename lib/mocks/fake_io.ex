@@ -15,3 +15,8 @@ defmodule FakeTurnIO do
   def gets("\nEnter 1 if you would like to go first or 2 if second:\n"), do: " 1 "
   def gets(value), do: raise ArgumentError, message: "invalid argument #{value}"
 end
+
+defmodule FakeMoveIO do
+  def gets, do: " 8 "
+  def gets(value), do: raise ArgumentError, message: "invalid argument #{value}"
+end

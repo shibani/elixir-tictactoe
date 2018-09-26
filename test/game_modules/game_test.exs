@@ -21,7 +21,7 @@ defmodule GameTest do
     [:x, :o, :x]
   ]
   describe "game play methods" do
-    test "game can mark a square on the board" do
+    test "game can mark a square on the board given a board, row and column" do
       board = Board.create_board(3)
       updated = Game.mark_square(board, 0, 0, :x)
       assert updated == [[:x, nil, nil], [nil, nil, nil], [nil, nil, nil]]
@@ -113,6 +113,21 @@ defmodule GameTest do
 
     test "it can get the winning icon" do
       assert Game.winning_icon(@board2) == :o
+    end
+
+    test "game can mark a square on the board given a gamestate and a square" do
+      board = Board.create_board(3)
+      gamestate = %{
+        board: board,
+        row_size: 3,
+        player1: %HumanPlayer{icon: :x, name: "foo"},
+        player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+        current_player: %HumanPlayer{icon: :x, name: "foo"},
+        rules: Rules
+      }
+
+      %{ board: board } = Game.mark_square(gamestate, 7)
+      assert board == [[nil, nil, nil], [nil, nil, nil], [:x, nil, nil]]
     end
   end
 

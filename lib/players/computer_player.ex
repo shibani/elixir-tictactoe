@@ -7,8 +7,8 @@ defmodule ComputerPlayer do
   end
 
   defimpl PlayerMove, for: ComputerPlayer do
-    def select_move(player, board) do
-      player.strategy.best_move(board)
+    def select_move(player, gamestate) do
+      player.strategy.best_move(gamestate)
     end
   end
 

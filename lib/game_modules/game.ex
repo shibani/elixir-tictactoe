@@ -6,6 +6,13 @@ defmodule Game do
     List.replace_at(board, row, new_row)
   end
 
+  def mark_square(gamestate, square) do
+    %{ row: row, col: col } =
+    Game.square_to_rows_and_cols(square, gamestate.row_size)
+    board = mark_square(gamestate.board, row, col, gamestate.current_player.icon)
+    Map.put(gamestate, :board, board)
+  end
+
   def has_win?(board) do
     Rules.has_winning_row?(board) ||
     Rules.has_winning_column?(board) ||

@@ -10,6 +10,7 @@ defmodule CliMessages do
   @row_divider "|\n-------------\n"
   @computer_name "Computer"
   @computer_icon "@"
+  @get_player_move "\nPlease enter a move:\n"
   @game_tied "\nGame is tied!\n"
   @game_end "\nThank you for playing!\n"
 
@@ -30,6 +31,8 @@ defmodule CliMessages do
   def computer_name, do: @computer_name
 
   def computer_icon, do: @computer_icon
+
+  def get_player_move, do: @get_player_move
 
   def game_tied, do: @game_tied
 

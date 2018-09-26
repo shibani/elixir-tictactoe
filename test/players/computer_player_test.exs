@@ -14,8 +14,16 @@ defmodule ComputerPlayerTest do
   end
 
   test "should be able to select a move" do
-    player = ComputerPlayer.create_player("Computer", :o, FakeStrategy)
-    result = PlayerMove.select_move(player, @board)
+    gamestate = %{
+      board: @board,
+      row_size: 3,
+      player1: %HumanPlayer{icon: :x, name: "foo"},
+      player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+      current_player: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+      rules: Rules
+    }
+
+    result = PlayerMove.select_move(gamestate.current_player, gamestate)
 
     assert result == 6
   end

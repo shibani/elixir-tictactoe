@@ -8,7 +8,7 @@ defmodule HumanPlayer do
 
   defimpl PlayerMove, for: HumanPlayer do
     def select_move(player, gamestate) do
-      player.strategy.get_input( CliMessages.get_player_move, IO )
+      player.strategy.get_input( IO )
     end
   end
 

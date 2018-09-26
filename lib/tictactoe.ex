@@ -1,9 +1,5 @@
 defmodule TicTacToe do
 
-  def hello do
-    :world
-  end
-
   def main(args \\ []) do
     TicTacToe.init(GameConfig, GameLoop, GameOver)
   end

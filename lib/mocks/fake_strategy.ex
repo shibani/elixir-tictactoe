@@ -3,7 +3,7 @@ defmodule FakeStrategy do
     6
   end
 
-  def get_input(message, io) do
+  def get_input(io) do
     3
   end
 

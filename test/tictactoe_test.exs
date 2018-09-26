@@ -1,10 +1,6 @@
 defmodule TicTacToeTest do
   use ExUnit.Case
 
-  test "greets the world" do
-    assert TicTacToe.hello() == :world
-  end
-
   describe "init plays the game" do
 
     test "init can configure the game" do

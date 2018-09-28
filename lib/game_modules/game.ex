@@ -28,9 +28,8 @@ defmodule Game do
   end
 
   def switch_player(gamestate) do
-    new_gamestate = gamestate
-    |> GameState.switch_current_player_in_gamestate
-    new_gamestate.current_player
+    gamestate
+    |> GameState.switch_current_player
   end
 
   def square_to_rows_and_cols(square, row_size) do

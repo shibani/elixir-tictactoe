@@ -1,12 +1,11 @@
 defmodule MinimaxStrategy do
-  def best_move(gamestate, player_factor \\ -1, depth \\ 0) do
+  def best_move(gamestate, depth \\ 0) do
     available_squares = Board.empty_squares(gamestate.board)
 
     if Game.is_over?(gamestate.board) do
       player_score_value(gamestate.board)
     else
-      GameState.switch_current_player_in_gamestate(gamestate)
-      scores_map = Enum.map(available_squares, fn index -> { index, player_factor * best_move(MinimaxStrategy.place_move(gamestate, index), switch_player_factor(player_factor), depth + 1) } end)
+      scores_map = Enum.map(available_squares, fn index -> { index, -1 * best_move(MinimaxStrategy.place_move(gamestate, index), depth + 1) } end)
                      |> Map.new()
 
       cond do
@@ -20,10 +19,8 @@ defmodule MinimaxStrategy do
 
   def place_move(gamestate, square) do
     Game.mark_square(gamestate, square)
-    |> GameState.switch_current_player_in_gamestate
+    |> GameState.switch_current_player
   end
-
-  defp switch_player_factor(num), do: -num
 
   defp player_score_value(board) do
     if Game.has_win?(board), do: -1, else: 0

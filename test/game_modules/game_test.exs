@@ -76,12 +76,12 @@ defmodule GameTest do
       player1 = HumanPlayer.create_player("Player 1", :x)
       player2 = ComputerPlayer.create_player("Computer", :o)
 
-      current_player = GameState.create_game_state(board, row_size, rules)
+      gamestate = GameState.create_game_state(board, row_size, rules)
       |> GameState.set_first_player(player1)
       |> GameState.set_second_player(player2)
       |> Game.switch_player
 
-      assert current_player == player2
+      assert gamestate.current_player == player2
     end
   end
 

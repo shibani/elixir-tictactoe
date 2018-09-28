@@ -2,6 +2,21 @@ defmodule CliMessagesTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
 
+  @board  [
+    [:x, nil, :o],
+    [:o, nil, :x],
+    [:x, :o, nil]
+  ]
+
+  @gamestate %{
+    board: @board,
+    row_size: 3,
+    player1: %HumanPlayer{icon: :x, name: "foo"},
+    player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+    current_player: %HumanPlayer{icon: :x, name: "foo"},
+    rules: Rules
+  }
+
   test "should have a welcome message" do
     message = "\nWelcome to Tictactoe, human vs computer version\n"
     execute_main = fn ->
@@ -16,7 +31,16 @@ defmodule CliMessagesTest do
       [:o, nil, :x],
       [:x, :o, nil]
     ]
-    row_size = 3
+
+    gamestate = %{
+      board: board,
+      row_size: 3,
+      player1: %HumanPlayer{icon: :x, name: "foo"},
+      player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+      current_player: %HumanPlayer{icon: :x, name: "foo"},
+      rules: Rules
+    }
+
     formatted_board =
 "| x | 2 | o |
 -------------
@@ -25,7 +49,7 @@ defmodule CliMessagesTest do
 | x | o | 9 |\n"
 
     execute_main = fn ->
-      CliMessages.format_board_for_cli(board, row_size)
+      CliMessages.format_board_for_cli(gamestate)
     end
 
     assert capture_io(execute_main) =~ formatted_board
@@ -71,6 +95,22 @@ defmodule CliMessagesTest do
     message = "@"
 
     assert CliMessages.computer_icon == message
+  end
+
+  test "given a gamestate, it can announce a turn" do
+    message = "foo, your turn. Please select a move between 1 - 9:"
+    assert CliMessages.announce_turn(@gamestate) == message
+  end
+
+  test "given a gamestate and a move, it can confirm the selected move" do
+    move = 9
+    message = "\nfoo selects square 9. Placing foo's move.\n"
+    assert CliMessages.confirm_move(@gamestate, move) == message
+  end
+
+  test "it can print an invalid, please try again message" do
+    message = "\nThat is an invalid move, please try again.\n"
+    assert CliMessages.invalid_try_again == message
   end
 
 end

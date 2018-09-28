@@ -52,7 +52,7 @@ defmodule MinimaxStrategyTest do
     gamestate = %{ board: board, row_size: @row_size, player1: @computer,
     player2: @human, current_player: @computer, rules: Rules }
 
-    assert 8 == MinimaxStrategy.best_move(gamestate)
+    assert 4 == MinimaxStrategy.best_move(gamestate)
   end
 
   test "it can mark the board given a square and a gamestate" do

@@ -7,7 +7,7 @@ defmodule HumanPlayer do
   end
 
   defimpl PlayerMove, for: HumanPlayer do
-    def select_move(player, gamestate) do
+    def select_move(player, _gamestate) do
       player.strategy.get_input(IO)
     end
   end

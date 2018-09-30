@@ -1,13 +1,13 @@
 defmodule ComputerPlayerConfig do
-  def get_name(message, io \\ IO) do
+  def get_name(_message, _io \\ IO) do
     CliMessages.computer_name
   end
 
-  def get_icon(message, io \\ IO) do
+  def get_icon(_message, _io \\ IO) do
     CliMessages.computer_icon
   end
 
-  def get_turn_order(message, io \\ IO) do
+  def get_turn_order(message, _io \\ IO) do
     if message == "1", do: "2", else: "1"
   end
 

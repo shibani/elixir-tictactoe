@@ -1,6 +1,6 @@
 # TicTacToe
 
-** Installation  
+**Installation  
 
 This project requires Elixir 1.6.6 (compiled with OTP 20)  
 
@@ -14,7 +14,7 @@ Then install Elixir by going to:
 https://elixir-lang.org/install.html
 ```
 
-** To run tests
+**To run tests
 
 cd into root of app directory and run in console.
 
@@ -24,16 +24,16 @@ To run the entire suite:
 mix test 
 ```
 
-** To run an individual test file:
+**To run an individual test file:
 ```
 mix test test/ui_modules/cli_messages_test.exs 
 ```
 
-** To run an individual test:
+**To run an individual test:
 ```
 mix test test/ui_modules/cli_messages_test.exs:73 
 ```  
-** To play game in terminal
+**To play game in terminal
 
 cd into root of app directory and run in console:  
 
@@ -43,7 +43,7 @@ mix escript.build
 ```
 
 
-** Functional Core
+**Functional Core
 
 ```
 lib
@@ -52,7 +52,7 @@ lib
 -- strategy_modules/  
 ```
 
-** Imperative Shell
+**Imperative Shell
 ```
 lib
 -- app_modules/  

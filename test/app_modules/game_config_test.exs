@@ -12,13 +12,13 @@ defmodule GameConfigTest do
 
   @gamesetup %{
     row_size: 3,
-    name: nil,
-    icon: nil,
-    turn_order: nil,
+    computer_icon: "X",
+    computer_name: "foo",
+    computer_strategy: MinimaxStrategy,
     human_strategy: InputStrategy,
-    computer_name: nil,
-    computer_icon: nil,
-    computer_strategy: MinimaxStrategy
+    icon: "X",
+    name: "foo",
+    turn_order: 1
   }
 
   @gamestate %{
@@ -31,14 +31,10 @@ defmodule GameConfigTest do
   }
 
   describe "setup" do
-    # test "it returns a gamesetup map" do
-    #   expected_game_setup_map = %{ row_size: 3 }
-    #   assert GameConfig.create_gamesetup_map == expected_game_setup_map
-    # end
-
-    # test "it returns a gamesetup map" do
-    #   assert GameConfig.setup(FakeCliMessages, FakeIconIO) == @gamesetup
-    # end
+    test "it returns a gamesetup map" do
+      result = GameConfig.setup(FakeCliMessages, IO, FakePlayerConfig)
+      assert result == @gamesetup
+    end
   end
 
   describe "init can set the game configuration and the initial gamestate" do

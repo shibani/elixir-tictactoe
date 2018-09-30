@@ -22,10 +22,9 @@ defmodule GameOver do
 
   defp announce_winner(gamestate) do
     icon = Game.winning_icon(gamestate.board)
-    if gamestate.player1.icon == icon do
-      IO.puts "\n" <> gamestate.player1.name <> " wins!\n"
-    else
-      IO.puts "\n" <> gamestate.player2.name <> " wins!\n"
+    case gamestate.player1.icon == icon do
+      true -> IO.puts CliMessages.game_won(gamestate.player1.name)
+      false -> IO.puts CliMessages.game_won(gamestate.player2.name)
     end
   end
 

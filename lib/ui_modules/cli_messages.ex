@@ -13,9 +13,13 @@ defmodule CliMessages do
   @row_divider "|\n-------------\n"
   @computer_name "Computer"
   @computer_icon "@"
+  @confirm_computer_name "Computer's name will be "
+  @confirm_computer_icon "Computer's icon will be "
+  @confirm_computer_turn_order "Computer will go "
   @announce_turn ", your turn. Please select a move between 1 - 9:"
+  @input_strategy_move "\nEnter your move:\n"
   @invalid_try_again "\nThat is an invalid move, please try again.\n"
-  @game_tied "\nGame is tied!\n"
+  @game_tied "\nGame is tied!"
   @game_end "\nThank you for playing!\n"
 
   def welcome_message, do: IO.puts @welcome_message
@@ -42,13 +46,31 @@ defmodule CliMessages do
 
   def computer_icon, do: @computer_icon
 
+  def confirm_computer_name, do: @confirm_computer_name
+
+  def confirm_computer_icon, do: @confirm_computer_icon
+
+  def confirm_computer_turn_order, do: @confirm_computer_turn_order
+
+  def format_computer_turn_order(turn_order) do
+    if (turn_order == 1), do: "second", else: "first"
+  end
+
+  def computer_config(name, icon, order) do
+    "\n" <> name <> " chooses to use the icon: " <> icon <> " and will go " <> order <> ".\n"
+  end
+
   def announce_turn(gamestate), do: gamestate.current_player.name <> @announce_turn
 
   def confirm_move(gamestate, number), do: "\n" <> gamestate.current_player.name <> " selects square " <> Integer.to_string(number) <> ". Placing " <> gamestate.current_player.name <> "\'s move.\n"
 
+  def input_strategy_move, do: @input_strategy_move
+
   def invalid_try_again, do: @invalid_try_again
 
   def game_tied, do: @game_tied
+
+  def game_won(name), do: "\n" <> name <> " wins!"
 
   def game_end, do: @game_end
 

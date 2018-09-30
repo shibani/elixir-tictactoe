@@ -17,6 +17,13 @@ defmodule Rules do
     && no_elements_are_empty?(row)
   end
 
+  def square_to_rows_and_cols(square, row_size) do
+    %{
+      row: div(square - 1, row_size),
+      col: rem(square - 1, row_size)
+    }
+  end
+
   defp check_for_win(rows) do
     Enum.any?(rows, fn row -> is_winning_row?(row) end)
   end

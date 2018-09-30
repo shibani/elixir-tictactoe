@@ -19,4 +19,5 @@ end
 defmodule FakeMoveIO do
   def gets("\nEnter your move:\n"), do: " 8 "
   def gets(value), do: raise ArgumentError, message: "invalid argument #{value}"
+
 end

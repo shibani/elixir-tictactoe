@@ -1,5 +1,5 @@
 defmodule FakeGameConfig do
-  def setup(module) do
+  def setup(module, player_config) do
     "Game setup was called"
   end
 
@@ -22,7 +22,7 @@ end
 
 defmodule FakeNilGameConfig do
 
-  def setup(module) do
+  def setup(module, player_config) do
     nil
   end
   def init(gameconfig) do

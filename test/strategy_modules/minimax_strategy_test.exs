@@ -74,7 +74,7 @@ defmodule MinimaxStrategyTest do
     square = 3
 
     %{ board: board, current_player: current_player } = MinimaxStrategy.place_move(gamestate, square)
-    %{row: row, col: col} = Game.square_to_rows_and_cols(square, gamestate.row_size)
+    %{row: row, col: col} = Rules.square_to_rows_and_cols(square, gamestate.row_size)
 
     assert Board.get_square(board, row, col) == gamestate.player1.icon
     assert Map.equal?(current_player, gamestate.player2)

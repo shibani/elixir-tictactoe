@@ -1,6 +1,13 @@
 defmodule GameLoop do
 
   def init(gamestate, module) do
+    case Game.is_over?(gamestate.board) do
+      true -> gamestate
+      false -> play_loop(gamestate, module)
+    end
+  end
+
+  def play_loop(gamestate, module) do
     gamestate
     |> module.format_board_for_cli
 
@@ -8,7 +15,7 @@ defmodule GameLoop do
     IO.puts module.confirm_move(gamestate, move)
 
     check_for_validity_and_place_move(gamestate, move, module)
-    |> check_if_game_is_over_or_loop_again
+    |> GameLoop.init(CliMessages)
   end
 
   def get_move(gamestate, module) do
@@ -22,13 +29,6 @@ defmodule GameLoop do
       |> Game.switch_player
       false -> IO.puts module.invalid_try_again
       GameLoop.init(gamestate, CliMessages)
-    end
-  end
-
-  def check_if_game_is_over_or_loop_again(gamestate) do
-    case Game.is_over?(gamestate.board) do
-      true -> gamestate
-      false -> GameLoop.init(gamestate, CliMessages)
     end
   end
 

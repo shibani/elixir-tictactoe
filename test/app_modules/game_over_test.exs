@@ -43,15 +43,6 @@ defmodule GameOverTest do
     [:x, :o, nil]
   ]
 
-  @gamestate2 %{
-    board: @board2,
-    row_size: @row_size,
-    player1: nil,
-    player2: nil,
-    current_player: nil,
-    rules: Rules
-  }
-
   @gamestate3 %{
     board: @board3,
     row_size: @row_size,
@@ -60,6 +51,16 @@ defmodule GameOverTest do
     current_player: nil,
     rules: Rules
   }
+
+  test "init outputs a game over message" do
+    message = "\nThank you for playing!\n"
+    module = CliMessages
+    execute_main = fn ->
+      GameOver.init(@gamestate1, FakeCliMessages)
+    end
+    assert capture_io(execute_main) =~ message
+  end
+
 
   test "it can check if the game is over" do
     message = "\nPlayer 1 wins!\n"
@@ -100,5 +101,4 @@ defmodule GameOverTest do
 
     assert capture_io(execute_main) =~ message
   end
-
 end

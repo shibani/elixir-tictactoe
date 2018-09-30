@@ -54,7 +54,6 @@ defmodule GameOverTest do
 
   test "init outputs a game over message" do
     message = "\nThank you for playing!\n"
-    module = CliMessages
     execute_main = fn ->
       GameOver.init(@gamestate1, FakeCliMessages)
     end

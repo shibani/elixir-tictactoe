@@ -1,6 +1,5 @@
 defmodule HumanPlayerTest do
   use ExUnit.Case
-  import ExUnit.CaptureIO
 
   @board [
     [:x, :x, :o],

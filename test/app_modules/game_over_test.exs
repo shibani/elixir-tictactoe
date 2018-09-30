@@ -43,15 +43,6 @@ defmodule GameOverTest do
     [:x, :o, nil]
   ]
 
-  @gamestate2 %{
-    board: @board2,
-    row_size: @row_size,
-    player1: nil,
-    player2: nil,
-    current_player: nil,
-    rules: Rules
-  }
-
   @gamestate3 %{
     board: @board3,
     row_size: @row_size,
@@ -61,19 +52,31 @@ defmodule GameOverTest do
     rules: Rules
   }
 
+  test "init outputs a game over message" do
+    message = "\nThank you for playing!\n"
+    module = CliMessages
+    execute_main = fn ->
+      GameOver.init(@gamestate1, FakeCliMessages)
+    end
+    assert capture_io(execute_main) =~ message
+  end
+
+
   test "it can check if the game is over" do
     message = "\nPlayer 1 wins!\n"
+    module = CliMessages
     execute_main = fn ->
-      GameOver.check_for_win_or_tie(@gamestate1)
+      GameOver.check_for_win_or_tie(@gamestate1, module)
     end
 
     assert capture_io(execute_main) =~ message
   end
 
-  test "it can check who won even if the board isn't full" do
+  test "it can check who won" do
     message = "\nComputer wins!\n"
+    module = CliMessages
     execute_main = fn ->
-      GameOver.check_for_win_or_tie(@gamestate3)
+      GameOver.check_for_win_or_tie(@gamestate3, module)
     end
 
     assert capture_io(execute_main) =~ message
@@ -81,8 +84,9 @@ defmodule GameOverTest do
 
   test "it can check if the game is tied" do
     message = "\nGame is tied!\n"
+    module = CliMessages
     execute_main = fn ->
-      GameOver.check_for_win_or_tie(@gamestate2)
+      GameOver.check_for_win_or_tie(@gamestate2, module)
     end
 
     assert capture_io(execute_main) =~ message
@@ -90,8 +94,9 @@ defmodule GameOverTest do
 
   test "it can output a final message that ends the game" do
     message = "\nThank you for playing!\n"
+    module = CliMessages
     execute_main = fn ->
-      GameOver.game_end
+      GameOver.game_end(module)
     end
 
     assert capture_io(execute_main) =~ message

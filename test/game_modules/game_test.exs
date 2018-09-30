@@ -76,35 +76,16 @@ defmodule GameTest do
       player1 = HumanPlayer.create_player("Player 1", :x)
       player2 = ComputerPlayer.create_player("Computer", :o)
 
-      current_player = GameState.create_game_state(board, row_size, rules)
+      gamestate = GameState.create_game_state(board, row_size, rules)
       |> GameState.set_first_player(player1)
       |> GameState.set_second_player(player2)
       |> Game.switch_player
 
-      assert current_player == player2
+      assert gamestate.current_player == player2
     end
   end
 
   describe "game is able to check if a selected move is valid" do
-    test "it can convert a position to rows and columns" do
-      square = 6
-      row_size = 3
-      assert Game.square_to_rows_and_cols(square, row_size) == %{ row: 1, col: 2}
-    end
-
-    test "it can convert a map of row and column coordinates back to a position" do
-      square = %{row: 1, col: 2}
-      row_size = 3
-      assert Game.rows_and_cols_to_square(square, row_size) == 6
-    end
-
-    test "it can convert row and column coordinates back to a position" do
-      row = 1
-      col = 2
-      row_size = 3
-      assert Game.rows_and_cols_to_square(row, col, row_size) == 6
-    end
-
     test "it can check if a move is valid" do
       row_size = 3
       assert Game.valid_move?(@board3, 5, row_size) == true

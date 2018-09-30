@@ -1,18 +1,14 @@
 defmodule TicTacToe do
 
-  def hello do
-    :world
-  end
-
   def main(args \\ []) do
     TicTacToe.init(GameConfig, GameLoop, GameOver)
   end
 
   def init(game_config, game_loop, game_over) do
-    game_config.setup
+    game_config.setup(CliMessages, PlayerConfig)
     |> game_config.init
-    |> game_loop.init
-    |> game_over.init
+    |> game_loop.init(CliMessages)
+    |> game_over.init(CliMessages)
   end
 
 end

@@ -1,34 +1,42 @@
 defmodule GameConfig do
-  def setup do
-    CliMessages.welcome_message
+  def setup(module, io \\ IO, player_config) do
+
+    module.welcome_message
 
     row_size = GameConfig.row_size
 
-    name = user_input(CliMessages.ask_for_name, IO, UserNameConfig)
-    confirm(name, UserNameConfig)
+    name = player_config.get_name(HumanPlayerConfig, CliMessages.ask_for_name, io)
+    player_config.confirm_name(HumanPlayerConfig, name)
 
-    icon = user_input(CliMessages.ask_for_icon, IO, UserIconConfig)
-    confirm(icon, UserIconConfig)
+    icon = player_config.get_icon(HumanPlayerConfig, CliMessages.ask_for_icon, io)
+    player_config.confirm_icon(HumanPlayerConfig, icon)
 
-    turn_order = user_input(CliMessages.ask_for_turn_order, IO, UserTurnConfig)
-    confirm(turn_order, UserTurnConfig)
+    turn_order = player_config.get_turn_order(HumanPlayerConfig, CliMessages.ask_for_turn_order, io)
+    player_config.confirm_turn_order(HumanPlayerConfig, turn_order)
 
-    computer_player_config_message(CliMessages.computer_name, CliMessages.computer_icon, turn_order)
+    computer_name = player_config.get_name(ComputerPlayerConfig, nil, io)
+    player_config.confirm_name(ComputerPlayerConfig, computer_name)
 
-    gamesetup = %{
-      row_size: row_size,
-      name: name,
-      icon: icon,
-      turn_order: turn_order,
-      computer_name: CliMessages.computer_name,
-      computer_icon: CliMessages.computer_icon,
-      computer_strategy: MinimaxStrategy
-    }
+    computer_icon = player_config.get_icon(ComputerPlayerConfig, nil, io)
+    player_config.confirm_icon(ComputerPlayerConfig, computer_icon)
+
+    computer_turn_order = player_config.get_turn_order(ComputerPlayerConfig, turn_order, io)
+    player_config.confirm_turn_order(ComputerPlayerConfig, computer_turn_order)
+
+    %{}
+    |> Map.put(:row_size, row_size)
+    |> Map.put(:name, name)
+    |> Map.put(:icon, icon)
+    |> Map.put(:turn_order, String.to_integer(turn_order))
+    |> Map.put(:human_strategy, InputStrategy)
+    |> Map.put(:computer_name, computer_name)
+    |> Map.put(:computer_icon, computer_icon)
+    |> Map.put(:computer_strategy, MinimaxStrategy)
   end
 
   def init(gamesetup) do
     init_gamestate(gamesetup.row_size)
-    |> create_human_player(gamesetup.name, gamesetup.icon, gamesetup.turn_order)
+    |> create_human_player(gamesetup.name, gamesetup.icon, gamesetup.turn_order, gamesetup.human_strategy)
     |> create_computer_player(gamesetup.computer_name, gamesetup.computer_icon, gamesetup.turn_order, gamesetup.computer_strategy)
   end
 
@@ -42,16 +50,16 @@ defmodule GameConfig do
   end
 
   def user_input(message, io \\ IO, module) do
-    input = get_input(message, io)
-    module.validate(input, message, io)
+    get_input(message, io)
+    |> module.validate(message, io)
   end
 
   def confirm(input, module) do
     module.confirm(input)
   end
 
-  def create_human_player(gamestate, name, icon, turn_order) do
-    human_player = HumanPlayer.create_player(name, icon)
+  def create_human_player(gamestate, name, icon, turn_order, strategy) do
+    human_player = HumanPlayer.create_player(name, icon, strategy)
     new_gamestate = cond do
       turn_order == 1 ->
         gamestate
@@ -77,8 +85,8 @@ defmodule GameConfig do
   end
 
   def computer_player_config_message(name, icon, turn_order) do
-    order = if (turn_order == 1), do: "second", else: "first"
-    IO.puts "\n" <> name <> " chooses to use the icon: " <> icon <> " and will go " <> order <> ".\n"
+    order = CliMessages.format_computer_turn_order(turn_order)
+    IO.puts CliMessages.computer_config(name, icon, order)
   end
 
   defp get_input(message, io) do

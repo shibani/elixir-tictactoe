@@ -8,7 +8,7 @@ defmodule Game do
 
   def mark_square(gamestate, square) do
     %{ row: row, col: col } =
-    Game.square_to_rows_and_cols(square, gamestate.row_size)
+    Rules.square_to_rows_and_cols(square, gamestate.row_size)
     board = mark_square(gamestate.board, row, col, gamestate.current_player.icon)
     Map.put(gamestate, :board, board)
   end
@@ -28,30 +28,13 @@ defmodule Game do
   end
 
   def switch_player(gamestate) do
-    new_gamestate = gamestate
-    |> GameState.switch_current_player_in_gamestate
-    new_gamestate.current_player
-  end
-
-  def square_to_rows_and_cols(square, row_size) do
-    %{
-      row: div(square - 1, row_size),
-      col: rem(square - 1, row_size)
-    }
-  end
-
-  def rows_and_cols_to_square(square, row_size) do
-    %{row: row, col: col} = square
-    row * row_size + col + 1
-  end
-
-  def rows_and_cols_to_square(row, col, row_size) do
-    row * row_size + col + 1
+    gamestate
+    |> GameState.switch_current_player
   end
 
   def valid_move?(board, square, row_size) do
-    %{row: row, col: col} = Game.square_to_rows_and_cols(square, row_size)
-    Board.get_square(board, row, col) == nil
+    %{row: row, col: col} = Rules.square_to_rows_and_cols(square, row_size)
+    square_is_empty?(board, row, col)
   end
 
   def winning_icon(board) do
@@ -75,6 +58,10 @@ defmodule Game do
     |> Enum.filter(&Rules.is_winning_row?/1)
     |> List.flatten
     |> List.first
+  end
+
+  defp square_is_empty?(board, row, col) do
+    Board.get_square(board, row, col) == nil
   end
 
 end

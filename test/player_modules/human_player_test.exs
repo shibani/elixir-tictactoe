@@ -1,5 +1,6 @@
 defmodule HumanPlayerTest do
   use ExUnit.Case
+  import ExUnit.CaptureIO
 
   @board [
     [:x, :x, :o],
@@ -35,5 +36,4 @@ defmodule HumanPlayerTest do
     player = HumanPlayer.create_player("Player 1", :x, FakeStrategy)
     assert player.strategy == FakeStrategy
   end
-
 end

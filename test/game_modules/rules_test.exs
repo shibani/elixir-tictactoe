@@ -44,6 +44,12 @@ defmodule RulesTest do
       refute Rules.is_winning_row?([:o, :x, :x])
       refute Rules.is_winning_row?([:o, :x, nil])
     end
+
+    test "it can convert a position to rows and columns" do
+      square = 6
+      row_size = 3
+      assert Rules.square_to_rows_and_cols(square, row_size) == %{ row: 1, col: 2}
+    end
   end
 
 end

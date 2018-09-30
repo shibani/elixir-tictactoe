@@ -60,7 +60,7 @@ defmodule GameStateTest do
       gamestate = GameState.create_game_state(board, row_size, rules)
       |> GameState.set_first_player(player1)
       |> GameState.set_second_player(player2)
-      |> GameState.switch_current_player_in_gamestate
+      |> GameState.switch_current_player
 
       %{ current_player: current_player } = gamestate
       assert current_player == player2
@@ -92,7 +92,7 @@ defmodule GameStateTest do
       gamestate = GameState.create_game_state(board, row_size, rules)
       |> GameState.set_first_player(player1)
       |> GameState.set_second_player(player2)
-      |> GameState.switch_current_player_in_gamestate
+      |> GameState.switch_current_player
 
       assert gamestate.current_player == player2
     end

@@ -52,7 +52,7 @@ defmodule MinimaxStrategyTest do
     gamestate = %{ board: board, row_size: @row_size, player1: @computer,
     player2: @human, current_player: @computer, rules: Rules }
 
-    assert 8 == MinimaxStrategy.best_move(gamestate)
+    assert 4 == MinimaxStrategy.best_move(gamestate)
   end
 
   test "it can mark the board given a square and a gamestate" do
@@ -74,7 +74,7 @@ defmodule MinimaxStrategyTest do
     square = 3
 
     %{ board: board, current_player: current_player } = MinimaxStrategy.place_move(gamestate, square)
-    %{row: row, col: col} = Game.square_to_rows_and_cols(square, gamestate.row_size)
+    %{row: row, col: col} = Rules.square_to_rows_and_cols(square, gamestate.row_size)
 
     assert Board.get_square(board, row, col) == gamestate.player1.icon
     assert Map.equal?(current_player, gamestate.player2)

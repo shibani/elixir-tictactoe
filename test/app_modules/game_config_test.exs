@@ -10,6 +10,17 @@ defmodule GameConfigTest do
     [nil, nil, nil]
   ]
 
+  @gamesetup %{
+    row_size: 3,
+    computer_icon: "X",
+    computer_name: "foo",
+    computer_strategy: MinimaxStrategy,
+    human_strategy: InputStrategy,
+    icon: "X",
+    name: "foo",
+    turn_order: 1
+  }
+
   @gamestate %{
     board: @board,
     row_size: @row_size,
@@ -19,6 +30,13 @@ defmodule GameConfigTest do
     rules: Rules
   }
 
+  describe "setup" do
+    test "it returns a gamesetup map" do
+      result = GameConfig.setup(FakeCliMessages, IO, FakePlayerConfig)
+      assert result == @gamesetup
+    end
+  end
+
   describe "init can set the game configuration and the initial gamestate" do
     test "init returns a gamestate with board, row_size, players and rules values" do
       gamesetup = %{
@@ -26,6 +44,7 @@ defmodule GameConfigTest do
         name: "foo",
         icon: :x,
         turn_order: 1,
+        human_strategy: FakeStrategy,
         computer_name: "bar",
         computer_icon: :o,
         computer_strategy: FakeStrategy
@@ -36,9 +55,9 @@ defmodule GameConfigTest do
       assert %GameState{
         board: @board,
         row_size: 3,
-        player1: %HumanPlayer{icon: :x, name: "foo"},
+        player1: %HumanPlayer{icon: :x, name: "foo", strategy: FakeStrategy},
         player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
-        current_player: %HumanPlayer{icon: :x, name: "foo"},
+        current_player: %HumanPlayer{icon: :x, name: "foo", strategy: FakeStrategy},
         rules: Rules
       } == gamestate
     end
@@ -68,9 +87,9 @@ defmodule GameConfigTest do
       icon = "x"
       turn_order = 2
 
-      human_player = HumanPlayer.create_player(name, icon)
+      human_player = HumanPlayer.create_player(name, icon, FakeStrategy)
 
-      result = GameConfig.create_human_player(@gamestate, name, icon, turn_order)
+      result = GameConfig.create_human_player(@gamestate, name, icon, turn_order, FakeStrategy)
       %{ player2: player2 } = result
       assert Map.equal?(player2, human_player)
     end

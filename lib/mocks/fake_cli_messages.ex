@@ -1,9 +1,9 @@
 defmodule FakeCliMessages do
 
   def welcome_message, do: nil
-  def announce_turn(gamestate), do: nil
+  def announce_turn(_gamestate), do: nil
 
-  def confirm_move(gamestate, number), do: nil
+  def confirm_move(_gamestate, _number), do: nil
 
   def invalid_try_again, do: nil
 

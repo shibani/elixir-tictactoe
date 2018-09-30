@@ -1,6 +1,6 @@
 defmodule TicTacToe do
 
-  def main(args \\ []) do
+  def main(_args \\ []) do
     TicTacToe.init(GameConfig, GameLoop, GameOver)
   end
 

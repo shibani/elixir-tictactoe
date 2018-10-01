@@ -4,14 +4,19 @@
 
 This project requires Elixir 1.6.6 (compiled with OTP 20)  
 
-First install OTP 20 or above (backwards compatible) by going to:  
+**First install OTP 20 or above (backwards compatible) by going to:**  
 ```
 https://www.erlang-solutions.com/resources/download.html
 ```
 
-Then install Elixir by going to:
+**Then install Elixir by going to:**
 ```
 https://elixir-lang.org/install.html
+```
+
+**Then install this project by cloning:**  
+```
+git clone https://github.com/shibani/elixir-tictactoe.git
 ```
 
 **To run tests**

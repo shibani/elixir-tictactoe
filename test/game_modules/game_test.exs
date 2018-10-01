@@ -101,8 +101,7 @@ defmodule GameTest do
       gamestate = %{
         board: board,
         row_size: 3,
-        player1: %HumanPlayer{icon: :x, name: "foo"},
-        player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+        players: [%HumanPlayer{name: "foo", icon: :x, strategy: FakeStrategy}, %ComputerPlayer{name: "bar", icon: :o, strategy: FakeStrategy}],
         current_player: %HumanPlayer{icon: :x, name: "foo"},
         rules: Rules
       }

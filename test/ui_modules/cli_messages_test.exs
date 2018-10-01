@@ -37,6 +37,7 @@ defmodule CliMessagesTest do
       row_size: 3,
       player1: %HumanPlayer{icon: :x, name: "foo"},
       player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+      players: [%HumanPlayer{icon: :x, name: "foo"},%ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy}],
       current_player: %HumanPlayer{icon: :x, name: "foo"},
       rules: Rules
     }
@@ -149,16 +150,6 @@ defmodule CliMessagesTest do
     move = 9
     message = "\nfoo selects square 9. Placing foo's move.\n"
     assert CliMessages.confirm_move(@gamestate, move) == message
-  end
-
-  test "it returns a message to as for a move if entered manually" do
-    message = "\nEnter your move:\n"
-    assert CliMessages.input_strategy_move == message
-  end
-
-  test "it can print an invalid, please try again message" do
-    message = "\nThat is an invalid move, please try again.\n"
-    assert CliMessages.invalid_try_again == message
   end
 
   test "it returns a message when the game is won" do

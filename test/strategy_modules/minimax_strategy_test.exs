@@ -13,8 +13,7 @@ defmodule MinimaxStrategyTest do
       [:o, :o, :x]
     ]
 
-    gamestate = %{ board: board, row_size: @row_size, player1: @human,
-    player2: @computer, current_player: @human, rules: Rules }
+    gamestate = %{ board: board, row_size: @row_size, players: [@human, @computer], current_player: @human, rules: Rules }
 
     assert 5 == MinimaxStrategy.best_move(gamestate)
   end
@@ -25,8 +24,7 @@ defmodule MinimaxStrategyTest do
       [:o,  :o , :x],
       [nil, nil, nil]
     ]
-    gamestate = %{ board: board, row_size: @row_size, player1: @computer,
-    player2: @human, current_player: @computer, rules: Rules }
+    gamestate = %{ board: board, row_size: @row_size, players: [@computer, @human], current_player: @computer, rules: Rules }
 
     assert 8 == MinimaxStrategy.best_move(gamestate)
   end
@@ -37,8 +35,7 @@ defmodule MinimaxStrategyTest do
       [nil, :o,  nil],
       [nil, nil, nil]
     ]
-    gamestate = %{ board: board, row_size: @row_size, player1: @human,
-    player2: @computer, current_player: @human, rules: Rules }
+    gamestate = %{ board: board, row_size: @row_size, players: [@human, @computer], current_player: @human, rules: Rules }
 
     assert 8 == MinimaxStrategy.best_move(gamestate)
   end
@@ -49,8 +46,7 @@ defmodule MinimaxStrategyTest do
       [nil, :o,  nil],
       [nil, nil, nil]
     ]
-    gamestate = %{ board: board, row_size: @row_size, player1: @computer,
-    player2: @human, current_player: @computer, rules: Rules }
+    gamestate = %{ board: board, row_size: @row_size, players: [@computer, @human], current_player: @computer, rules: Rules }
 
     assert 4 == MinimaxStrategy.best_move(gamestate)
   end
@@ -65,8 +61,7 @@ defmodule MinimaxStrategyTest do
     gamestate = %{
       board: board,
       row_size: 3,
-      player1: %HumanPlayer{icon: :x, name: "foo"},
-      player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+      players: [%HumanPlayer{icon: :x, name: "foo"}, %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy}],
       current_player: %HumanPlayer{icon: :x, name: "foo"},
       rules: Rules
     }
@@ -76,7 +71,10 @@ defmodule MinimaxStrategyTest do
     %{ board: board, current_player: current_player } = MinimaxStrategy.place_move(gamestate, square)
     %{row: row, col: col} = Rules.square_to_rows_and_cols(square, gamestate.row_size)
 
-    assert Board.get_square(board, row, col) == gamestate.player1.icon
-    assert Map.equal?(current_player, gamestate.player2)
+    first_player = Enum.at(gamestate.players, 0)
+    second_player = Enum.at(gamestate.players, 1)
+
+    assert Board.get_square(board, row, col) == first_player.icon
+    assert Map.equal?(current_player, second_player)
   end
 end

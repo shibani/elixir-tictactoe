@@ -16,8 +16,7 @@ defmodule GameOverTest do
   @gamestate1 %{
     board: @board1,
     row_size: @row_size,
-    player1: @player1,
-    player2: @player2,
+    players: [@player1, @player2],
     current_player: nil,
     rules: Rules
   }
@@ -31,8 +30,7 @@ defmodule GameOverTest do
   @gamestate2 %{
     board: @board2,
     row_size: @row_size,
-    player1: nil,
-    player2: nil,
+    players: [],
     current_player: nil,
     rules: Rules
   }
@@ -46,15 +44,13 @@ defmodule GameOverTest do
   @gamestate3 %{
     board: @board3,
     row_size: @row_size,
-    player1: @player1,
-    player2: @player2,
+    players: [@player1, @player2],
     current_player: nil,
     rules: Rules
   }
 
   test "init outputs a game over message" do
     message = "\nThank you for playing!\n"
-    module = CliMessages
     execute_main = fn ->
       GameOver.init(@gamestate1, FakeCliMessages)
     end

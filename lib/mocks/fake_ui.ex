@@ -25,6 +25,7 @@ defmodule FakeNilGameConfig do
   def setup(_module, _player_config) do
     nil
   end
+
   def init(_gameconfig) do
     nil
   end

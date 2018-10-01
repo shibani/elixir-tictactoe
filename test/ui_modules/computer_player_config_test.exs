@@ -1,6 +1,5 @@
 defmodule ComputerPlayerConfigTest do
   use ExUnit.Case
-  import ExUnit.CaptureIO
 
   test "it should set a name" do
     message = ""

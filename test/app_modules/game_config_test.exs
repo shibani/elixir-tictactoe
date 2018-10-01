@@ -24,8 +24,7 @@ defmodule GameConfigTest do
   @gamestate %{
     board: @board,
     row_size: @row_size,
-    player1: nil,
-    player2: nil,
+    players: [],
     current_player: nil,
     rules: Rules
   }
@@ -55,8 +54,7 @@ defmodule GameConfigTest do
       assert %GameState{
         board: @board,
         row_size: 3,
-        player1: %HumanPlayer{icon: :x, name: "foo", strategy: FakeStrategy},
-        player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+        players: [%HumanPlayer{icon: :x, name: "foo", strategy: FakeStrategy}, %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy}],
         current_player: %HumanPlayer{icon: :x, name: "foo", strategy: FakeStrategy},
         rules: Rules
       } == gamestate
@@ -90,8 +88,11 @@ defmodule GameConfigTest do
       human_player = HumanPlayer.create_player(name, icon, FakeStrategy)
 
       result = GameConfig.create_human_player(@gamestate, name, icon, turn_order, FakeStrategy)
-      %{ player2: player2 } = result
-      assert Map.equal?(player2, human_player)
+
+      %{ players: players } = result
+      second_player = Enum.at(players, 1)
+
+      assert Map.equal?(second_player, human_player)
     end
 
     test "it can announce the creation of the computer player" do
@@ -111,8 +112,10 @@ defmodule GameConfigTest do
       computer_player = ComputerPlayer.create_player(name, icon, strategy)
 
       result = GameConfig.create_computer_player(@gamestate, name, icon, turn_order, strategy)
-      %{ player1: player1 } = result
-      assert Map.equal?(player1, computer_player)
+      %{ players: players } = result
+      first_player = Enum.at(players, 0)
+
+      assert Map.equal?(first_player, computer_player)
     end
   end
 

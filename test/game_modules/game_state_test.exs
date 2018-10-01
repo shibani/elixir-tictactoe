@@ -9,13 +9,12 @@ defmodule GameStateTest do
 
       gamestate = GameState.create_game_state(board, row_size, rules)
 
-      % GameState{ board: gs_board, row_size: gs_row_size, player1: gs_player1, player2: gs_player2,
+      % GameState{ board: gs_board, row_size: gs_row_size, players: gs_players,
       current_player: gs_current_player, rules: gs_rules } = gamestate
 
       assert gs_board == "foo"
       assert gs_row_size == 4
-      assert gs_player1 == nil
-      assert gs_player2 == nil
+      assert gs_players == []
       assert gs_current_player == nil
       assert gs_rules == "rules"
     end
@@ -31,9 +30,23 @@ defmodule GameStateTest do
       player = HumanPlayer.create_player("Player 1", :x)
       new_gamestate = GameState.set_first_player(gamestate, player)
 
-      assert Map.equal?(new_gamestate.player1, player)
+      assert Map.equal?(List.first(new_gamestate.players), player)
       assert Map.equal?(new_gamestate.current_player, player)
     end
+
+    test "should update the gamestate's players list when given the first player" do
+      board = "foo"
+      row_size = 3
+      rules = "rules"
+
+      gamestate = GameState.create_game_state(board, row_size, rules)
+      player = HumanPlayer.create_player("Player 1", :x)
+      new_gamestate = GameState.set_first_player(gamestate, player)
+
+      assert Map.equal?(List.first(new_gamestate.players), player)
+      assert Map.equal?(new_gamestate.current_player, player)
+    end
+
 
     test "should update the gamestate when given the second player" do
       board = "foo"
@@ -46,7 +59,9 @@ defmodule GameStateTest do
       |> GameState.set_first_player(player1)
       |> GameState.set_second_player(player2)
 
-      assert Map.equal?(gamestate.player2, player2)
+      second_player = Enum.at(gamestate.players, 1)
+
+      assert Map.equal?(second_player, player2)
     end
 
     test "gamestate can switch the current player" do
@@ -54,8 +69,8 @@ defmodule GameStateTest do
       row_size = 3
       rules = "rules"
 
-      player1 = HumanPlayer.create_player("Player 1", :x)
-      player2 = ComputerPlayer.create_player("Computer", :o)
+      player1 = HumanPlayer.create_player("Player 1", :x, FakeStrategy)
+      player2 = ComputerPlayer.create_player("Computer", :o, FakeStrategy)
 
       gamestate = GameState.create_game_state(board, row_size, rules)
       |> GameState.set_first_player(player1)
@@ -116,8 +131,7 @@ defmodule GameStateTest do
     @gamestate1 %{
       board: @board1,
       row_size: @row_size,
-      player1: nil,
-      player2: nil,
+      players: [],
       current_player: nil,
       rules: Rules
     }
@@ -129,6 +143,24 @@ defmodule GameStateTest do
       stringify_expected_result = @board2 |> List.flatten |> Enum.join(", ")
 
       assert stringify_asserted_result == stringify_expected_result
+    end
+  end
+
+  describe "it can get the first and second players" do
+    test "it can get the first or second player if given a gamestate" do
+      player1 = HumanPlayer.create_player("Player 1", :x, FakeStrategy)
+      player2 = ComputerPlayer.create_player("Computer", :o, FakeStrategy)
+
+      gamestate = %{
+        board: "foo",
+        row_size: 3,
+        players: [player1, player2],
+        current_player: nil,
+        rules: Rules
+      }
+
+      assert GameState.get_first_player(gamestate) == player1
+      assert GameState.get_second_player(gamestate) == player2
     end
   end
 end

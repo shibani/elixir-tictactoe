@@ -22,10 +22,20 @@ defmodule GameOver do
 
   defp announce_winner(gamestate) do
     icon = Game.winning_icon(gamestate.board)
-    case gamestate.player1.icon == icon do
-      true -> IO.puts CliMessages.game_won(gamestate.player1.name)
-      false -> IO.puts CliMessages.game_won(gamestate.player2.name)
+    player1 = first_player(gamestate)
+    player2 = second_player(gamestate)
+    case player1.icon == icon do
+      true -> IO.puts CliMessages.game_won(player1.name)
+      false -> IO.puts CliMessages.game_won(player2.name)
     end
+  end
+
+  defp first_player(gamestate) do
+    List.first(gamestate.players)
+  end
+
+  defp second_player(gamestate) do
+    List.last(gamestate.players)
   end
 
 end

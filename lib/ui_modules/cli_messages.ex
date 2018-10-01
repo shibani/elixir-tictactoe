@@ -17,8 +17,8 @@ defmodule CliMessages do
   @confirm_computer_icon "Computer's icon will be "
   @confirm_computer_turn_order "Computer will go "
   @announce_turn ", your turn. Please select a move between 1 - 9:"
-  @input_strategy_move "\nEnter your move:\n"
-  @invalid_try_again "\nThat is an invalid move, please try again.\n"
+  # @input_strategy_move "\nEnter your move:\n"
+  # @invalid_try_again "\nThat is an invalid move, please try again.\n"
   @game_tied "\nGame is tied!"
   @game_end "\nThank you for playing!\n"
 
@@ -63,10 +63,6 @@ defmodule CliMessages do
   def announce_turn(gamestate), do: gamestate.current_player.name <> @announce_turn
 
   def confirm_move(gamestate, number), do: "\n" <> gamestate.current_player.name <> " selects square " <> Integer.to_string(number) <> ". Placing " <> gamestate.current_player.name <> "\'s move.\n"
-
-  def input_strategy_move, do: @input_strategy_move
-
-  def invalid_try_again, do: @invalid_try_again
 
   def game_tied, do: @game_tied
 

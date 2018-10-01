@@ -1,18 +1,24 @@
-# TicTacToe
+# Elixir TicTacToe
 
 **Installation**  
 
 This project requires Elixir 1.6.6 (compiled with OTP 20)  
 
-First install OTP 20 or above (backwards compatible) by going to:  
+**First install OTP 20 or above (backwards compatible) by going to:**  
 ```
 https://www.erlang-solutions.com/resources/download.html
 ```
 
-Then install Elixir by going to:
+**Then install Elixir by going to:**
 ```
 https://elixir-lang.org/install.html
 ```
+
+**Then install this project by cloning:**  
+```
+git clone https://github.com/shibani/elixir-tictactoe.git
+```
+___
 
 **To run tests**
 
@@ -33,6 +39,8 @@ mix test test/ui_modules/cli_messages_test.exs
 ```
 mix test test/ui_modules/cli_messages_test.exs:73 
 ```  
+___
+
 **To play game in terminal**
 
 cd into root of app directory and run in console:  
@@ -41,7 +49,7 @@ cd into root of app directory and run in console:
 mix escript.build   
 ./tictactoe  
 ```
-
+___
 
 **Functional Core**
 

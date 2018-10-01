@@ -3,7 +3,7 @@ defmodule FakeStrategy do
     6
   end
 
-  def get_input(_io) do
+  def get_input(_io, _gamestate) do
     3
   end
 

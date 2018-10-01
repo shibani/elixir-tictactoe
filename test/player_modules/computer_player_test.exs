@@ -17,8 +17,7 @@ defmodule ComputerPlayerTest do
     gamestate = %{
       board: @board,
       row_size: 3,
-      player1: %HumanPlayer{icon: :x, name: "foo"},
-      player2: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
+      players: [%HumanPlayer{icon: :x, name: "foo"},%ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy}],
       current_player: %ComputerPlayer{icon: :o, name: "bar", strategy: FakeStrategy},
       rules: Rules
     }

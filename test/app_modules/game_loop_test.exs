@@ -11,8 +11,7 @@ defmodule GameLoopTest do
     gamestate = %{
       board: @board,
       row_size: 3,
-      player1: %HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy},
-      player2: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
+      players: [%HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy}, %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy}],
       current_player: %HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy},
       rules: Rules
     }
@@ -31,8 +30,7 @@ defmodule GameLoopTest do
     gamestate = %{
       board: @board,
       row_size: 3,
-      player1: %HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy},
-      player2: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
+      players: [%HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy}, %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy}],
       current_player: %HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy},
       rules: Rules
     }
@@ -43,8 +41,7 @@ defmodule GameLoopTest do
     new_gamestate = %{
       board: board2,
       row_size: 3,
-      player1: %HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy},
-      player2: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
+      players: [%HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy}, %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy}],
       current_player: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
       rules: Rules
     }
@@ -62,8 +59,7 @@ defmodule GameLoopTest do
     gamestate = %{
       board: board,
       row_size: 3,
-      player1: %HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy},
-      player2: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
+      players: [%HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy}, %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy}],
       current_player: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
       rules: Rules
     }
@@ -81,8 +77,7 @@ defmodule GameLoopTest do
     gamestate = %{
       board: board,
       row_size: 3,
-      player1: %HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy},
-      player2: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
+      players: [%HumanPlayer{name: "Player 1", icon: :x, strategy: FakeStrategy}, %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy}],
       current_player: %ComputerPlayer{name: "Computer", icon: :o, strategy: FakeStrategy},
       rules: Rules
     }
